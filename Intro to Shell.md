@@ -88,5 +88,40 @@ grep -r grep .
 
 ```
 
+Shells do not support regular expressions for searching paths; for this purpose you can use a glob. 
 
+### Glob
+a glob is a pattern-matching technique used to find sets of files or directories based on specific characters.
+
+While "Regular Expressions" (Regex) are like a surgical scalpel for finding text inside files, Globs are the blunt instruments used for finding the files themselves.
+1. Common Glob Wildcards
+
+You’ve likely already used globs in the terminal without calling them by name. Here are the characters that make them work:
+
+    * (The Asterisk): Matches any number of characters (including zero).
+
+        Example: ls *.sql finds every SQL file in your folder.
+
+    ? (The Question Mark): Matches exactly one character.
+
+        Example: ls model_?.sql would find model_1.sql and model_a.sql, but not model_10.sql.
+
+    [ ] (Square Brackets): Matches any one character listed inside.
+
+        Example: ls data_[abc].csv finds data_a.csv, data_b.csv, or data_c.csv.
+
+    ** (The Double Asterisk/Globstar): Matches directories recursively.
+
+        Example: ls **/main.py finds every main.py file in the current folder and every subfolder beneath it.
+
+#### Note to self
+Master regular expressions. 
+
+#### find
+Another useful function that lets you look files under specific conditions. `find` has a large directory of arguments that lets you do very granular searches like files that are at least this large or at most this large etc. Files that are directories, files that are links etc can also be found. 
+
+```
+# look up files in directory which are atleast 30 days old
+find ~/Downloads -type f -mtime +30
+```
 
