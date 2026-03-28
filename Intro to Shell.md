@@ -1,5 +1,5 @@
 [source](https://missing.csail.mit.edu/)
-
+[full class notes](https://missing.csail.mit.edu/2026/course-shell/)
 ### What is Shell?
 Computers have a bunch of interfaces that we use to interact with them. We are familiar with GUIs (Graphic User Interfaces). Shell or Terminal is the textual interface to a computer. Here you can chain commands and combine commands however you want to create new functionality that is impossible on a GUI. 
 
