@@ -166,9 +166,9 @@ ssh myserver 'journalctl -u sshd -b-1 | grep "Disconnected from"' \
 
 > You can add data to a file using commands like 
 > ```shell
-> # write tot he file 
+> -- write tot he file 
 date >thedate.txt
-># append to the file
+ --append to the file
 >date >> thedate.txt
 >
 >```
