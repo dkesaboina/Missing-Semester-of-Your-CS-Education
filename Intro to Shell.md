@@ -123,5 +123,82 @@ Another useful function that lets you look files under specific conditions. `fin
 ```
 # look up files in directory which are atleast 30 days old
 find ~/Downloads -type f -mtime +30
+
+# find can be very advanced
+# find all files in my Downloads directory that are at least a 100MB
+# for each such file, show ls -lh
+# exec takes a command terminated by a stand alone ;
+find ~/Downloads -type f -size 100M -exec ls -lh {} \;
+
+# find all python files that have TODO in them. 
+find . -name "*.py" -exec grep -l "TODO" {} \;
 ```
 
+ > find is recursive by nature. When you run `find` it looks for everything in that directory for the file/object you are looking for including other directories.
+ > 
+ > `find` has an argument called `maxdepth` which can dictate how deep you want find to go in a search. If `maxdepth` is 1 then it means search is limited to the current directory. 
+
+
+#### awk
+ `awk` like `sed` is a program which has its own programming language built in. Where `sed` is for editing files, `awk` is for parsing files. `awk` will by default split a file by lines and white space and will let you write expressions over the result of parsing it that way. 
+
+ 
+> `awk` is very useful for pulling/parsing data from semi structured files
+
+```shell
+# print second column from each row
+awk '{print $2}' sample_data
+
+# same as above for a csv file
+awk -F, '{print $2}' sample_data
+```
+
+### Putting these together
+```shell
+ssh myserver 'journalctl -u sshd -b-1 | grep "Disconnected from"' \
+  | sed -E 's/.*Disconnected from .* user (.*) [^ ]+ port.*/\1/' \
+  | sort | uniq -c \
+  | sort -nk1,1 | tail -n10 \
+  | awk '{print $2}' | paste -sd,
+```
+
+`ssh` is a way to run a command on a remote machine. 
+
+> You can add data to a file using commands like 
+> ```shell
+> # write tot he file 
+date >thedate.txt
+># append to the file
+>date >> thedate.txt
+>
+>```
+
+> 0 is a successful exit status in Linux
+
+#### if
+
+```shell
+if grep 2026 thedate.txt; then echo "It's 2026"; echo "HELLO"; fi
+```
+
+`test` or `[` can be used to compare variables 
+
+```shell
+if [ "hello" = "world" ]; then echo "equal"; else echo "not equal"; fi
+if [ -f thedate.txt ]; then echo 'thedate exists'; fi
+```
+#### while
+```shell
+# don't run this
+while grep 2026 thedate.txt; do echo "It's still 2026"; date > thedate.txt; sleep 10; done
+```
+
+#### for
+```shell
+for varname in a b c d; do echo "$varname"; done
+for varname in $(seq 1 10); echo "$varname"; done
+```
+
+> `#!` signifies a shebang. When a shell script has this at the start it means it is an `executable`. What is cool about the shell script is that you can change the shebang at the top to `#!usr/bin/python` and the shell script executes a python program from the shell script! In fact you can use this for any programming language that uses textual language as programming input (Python, Julia, Ruby work great). 
+
+> `ls -l` is used to get the rights on a file (executable, write, read etc)
